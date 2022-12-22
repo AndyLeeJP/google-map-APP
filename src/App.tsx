@@ -13,7 +13,6 @@ export default function App() {
       ? process.env.REACT_APP_GOOGLE_MAP_API_KEY
       : "",
   });
-  console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
   if (!isLoaded) return <div>Loading...</div>;
   return <AppRun />;
