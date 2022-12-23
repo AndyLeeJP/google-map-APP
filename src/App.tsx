@@ -33,7 +33,7 @@ interface accessPointType {
   address: string;
 }
 
-type item = {
+type dataType = {
   ID: [any, { 識別値: string }];
   設置地点: {
     地理座標: {
@@ -76,7 +76,7 @@ function AppRun() {
 
     const openData = await response.json();
 
-    openData[0].map((item: item) =>
+    openData[0].map((item: dataType) =>
       accessPoints.push({
         ssid: item["ID"][1]["識別値"],
         pos: {
@@ -94,21 +94,22 @@ function AppRun() {
   }, []);
 
   useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
+    navigator.geolocation.getCurrentPosition(
+      function success(position: any) {
         setCurrentPlace({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
-      });
-    }
-    setCurrentPlace({
-      lat: 35.6809591,
-      lng: 139.7673068,
-    });
+      },
+      function error() {
+        setCurrentPlace({
+          lat: 35.6809591,
+          lng: 139.7673068,
+        });
+      }
+    );
   }, []);
 
-  console.log("aaaa");
   return (
     <div className="App">
       <GoogleMap
